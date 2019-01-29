@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      body: _pageList[_tabIndex],
+      body:  _pageList[_tabIndex],
       bottomNavigationBar: new BottomNavigationBar(
         items: [
           new BottomNavigationBarItem(icon: Icon(Icons.book), title: Text('文章')),

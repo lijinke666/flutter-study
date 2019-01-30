@@ -23,6 +23,8 @@ dependencies:
   # 和 npm package.json 一样 不过这个是 自动下载 依赖
   flutter_swiper: ^1.1.4
 
+  http: ^0.11.3+17
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

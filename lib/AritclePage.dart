@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:convert';
 import 'dart:async';
 import 'package:flutter/foundation.dart';
@@ -7,17 +6,9 @@ import 'package:http/http.dart' as http;
 
 // 拉取文章列表
 Future<List<Article>> fetchArticleList(http.Client client) async {
-  final response = await client.get('https://www.lijinke.cn/api/article/lists?pageIndex=1&pageSize=5');
-
-  // Use the compute function to run parsePhotos in a separate isolate
-  return compute(parseArticle, response.body);
-}
-
-// 转成 json
-List<Article> parseArticle(String responseBody) {
-  // TODO: 要报错 ?
-  final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
-  return parsed.map<Article>((json) => Article.fromJson(json)).toList();
+  // final response = await client.get('https://www.lijinke.cn/api/article/lists?pageIndex=1&pageSize=5');
+  final response = [];
+  return response;
 }
 
 class AritclePage extends StatefulWidget {
@@ -27,10 +18,9 @@ class AritclePage extends StatefulWidget {
   }
 }
 
-
 class Page extends State<AritclePage> {
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return layout(context);
   }
 
@@ -50,10 +40,7 @@ class Page extends State<AritclePage> {
             ),
           ),
           body: TabBarView(
-            children: [
-              articleList(context),
-              Text('最热')
-            ],
+            children: [articleList(context), Text('最热')],
           ),
         ),
       ),
@@ -65,21 +52,20 @@ class Page extends State<AritclePage> {
     // 有数据 展示 否则加载 loading 效果
     return FutureBuilder<List<Article>>(
       future: fetchArticleList(http.Client()),
-      builder: (context, snapshot){
+      builder: (context, snapshot) {
         print(snapshot);
         if (snapshot.hasError) print(snapshot.error);
-
-          return snapshot.hasData
-              ? PhotosList(photos: snapshot.data)
-              : Center(child: CircularProgressIndicator());
+        return snapshot.hasData
+            ? PhotosList(photos: snapshot.data)
+            : Center(child: CircularProgressIndicator());
       },
     );
   }
 
   //单个文章
-  Widget articleCard(BuildContext context){
+  Widget articleCard(BuildContext context) {
     return Container(
-      child: Column (
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
@@ -91,14 +77,13 @@ class Page extends State<AritclePage> {
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
           ),
-          Container(child: 
-            Text(
+          Container(
+            child: Text(
               "文章内容",
-              style: TextStyle (
-                fontSize: 14.0,
-                fontWeight: FontWeight.w500,
-                color: Colors.black45
-              ),
+              style: TextStyle(
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black45),
               overflow: TextOverflow.ellipsis,
               maxLines: 2,
             ),
@@ -115,38 +100,43 @@ class Page extends State<AritclePage> {
           ),
           Container(
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Icon(Icons.panorama_fish_eye, size: 18.0, color: Colors.black45),
-                      Padding(padding: EdgeInsets.only(left: 5.0)),
-                      Text('222'),
-                      Padding(padding: EdgeInsets.only(left: 10.0)),
-                      Icon(Icons.refresh, size: 18.0, color: Colors.black45),
-                      Padding(padding: EdgeInsets.only(left: 5.0)),
-                      Text('111'),
-                      Padding(padding: EdgeInsets.only(left: 10.0)),
-                      Icon(Icons.tab, size: 18.0, color: Colors.black45),
-                      Padding(padding: EdgeInsets.only(left: 5.0)),
-                      Text('333'),
-                    ]
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Container(
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Icon(Icons.panorama_fish_eye,
+                              size: 18.0, color: Colors.black45),
+                          Padding(padding: EdgeInsets.only(left: 5.0)),
+                          Text('222'),
+                          Padding(padding: EdgeInsets.only(left: 10.0)),
+                          Icon(Icons.refresh,
+                              size: 18.0, color: Colors.black45),
+                          Padding(padding: EdgeInsets.only(left: 5.0)),
+                          Text('111'),
+                          Padding(padding: EdgeInsets.only(left: 10.0)),
+                          Icon(Icons.tab, size: 18.0, color: Colors.black45),
+                          Padding(padding: EdgeInsets.only(left: 5.0)),
+                          Text('333'),
+                        ]),
                   ),
-                ),
-                Container(
-                  child: Text('前端代码',textAlign: TextAlign.center, style: TextStyle(color: Colors.white),), 
-                  padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 5.0, bottom: 5.0),
-                  decoration: BoxDecoration(
-                    color:  Colors.green,
-                    borderRadius: BorderRadius.all(
-                      const Radius.circular(20.0),
+                  Container(
+                    child: Text(
+                      '前端代码',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.white),
                     ),
-                  ),
-                )
-              ]
-            ),
+                    padding: EdgeInsets.only(
+                        left: 10.0, right: 10.0, top: 5.0, bottom: 5.0),
+                    decoration: BoxDecoration(
+                      color: Colors.green,
+                      borderRadius: BorderRadius.all(
+                        const Radius.circular(20.0),
+                      ),
+                    ),
+                  )
+                ]),
             margin: EdgeInsets.only(top: 10.0),
           )
         ],
@@ -177,6 +167,7 @@ class PhotosList extends StatelessWidget {
     );
   }
 }
+
 class Article {
   final String author;
   final List<String> category;
@@ -188,7 +179,16 @@ class Article {
   final String title;
   final String content;
 
-  Article({this.author, this.comments, this.content, this.category, this.like, this.pageView, this.previewContent, this.publishDate, this.title});
+  Article(
+      {this.author,
+      this.comments,
+      this.content,
+      this.category,
+      this.like,
+      this.pageView,
+      this.previewContent,
+      this.publishDate,
+      this.title});
 
   factory Article.fromJson(Map<String, dynamic> json) {
     return Article(

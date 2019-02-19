@@ -18,11 +18,11 @@ class Page extends State<AboutPage> {
     return new Scaffold(
         appBar: new AppBar(title: const Text('关于')),
         body: Column(
-          children: <Widget>[panel(context)],
+          children: <Widget>[_avatar(context), _userInfo()],
         ));
   }
 
-  Widget panel(BuildContext context) {
+  Widget _avatar(BuildContext context) {
     return Container(
       width: 100.0,
       height: 100.0,
@@ -48,6 +48,43 @@ class Page extends State<AboutPage> {
         ],
         // 相当于 border-radius: 50%
         shape: BoxShape.circle,
+      ),
+    );
+  }
+
+  Widget _userInfo() {
+    return SizedBox(
+      height: 210,
+      child: Card(
+        child: Column(
+          children: [
+            ListTile(
+              title: Text('李金珂', style: TextStyle(fontWeight: FontWeight.w500)),
+              subtitle: Text('喜欢 React 和 Nodejs 的 前端搬砖工'),
+              leading: Icon(
+                Icons.supervised_user_circle,
+                color: Colors.green[500],
+              ),
+            ),
+            Divider(),
+            ListTile(
+              title: Text('https://github.com/lijinke666',
+                  style: TextStyle(fontWeight: FontWeight.w500)),
+              // subtitle: Text('https://github.com/lijinke666'),
+              leading: Icon(
+                Icons.dvr,
+                color: Colors.green[500],
+              ),
+            ),
+            ListTile(
+              title: Text('jkli@thoughtworks.com'),
+              leading: Icon(
+                Icons.email,
+                color: Colors.green[500],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

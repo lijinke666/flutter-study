@@ -26,14 +26,12 @@ class Page extends State<AboutPage> {
     return Container(
       width: 100.0,
       height: 100.0,
-      child: Image.network(
-        "https://cdn.lijinke.cn/1387583682387727.jpg",
-        fit: BoxFit.cover,
+      child: CircleAvatar(
+        backgroundColor: Colors.green,
+        backgroundImage: AssetImage("assets/images/my.png"),
       ),
-      alignment: Alignment.center,
       margin: const EdgeInsets.only(top: 40.0, bottom: 20.0),
       decoration: BoxDecoration(
-        color: Colors.red[400],
         boxShadow: <BoxShadow>[
           BoxShadow(
             color: Colors.grey[400],

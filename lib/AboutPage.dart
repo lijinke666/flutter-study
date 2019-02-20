@@ -54,7 +54,7 @@ class Page extends State<AboutPage> {
 
   Widget _userInfo() {
     return SizedBox(
-      height: 210,
+      height: 330,
       child: Card(
         child: Column(
           children: [
@@ -68,21 +68,58 @@ class Page extends State<AboutPage> {
             ),
             Divider(),
             ListTile(
-              title: Text('https://github.com/lijinke666',
-                  style: TextStyle(fontWeight: FontWeight.w500)),
-              // subtitle: Text('https://github.com/lijinke666'),
+              title:
+                  Text('GITHUB', style: TextStyle(fontWeight: FontWeight.w500)),
+              subtitle: Text('https://github.com/lijinke666'),
               leading: Icon(
                 Icons.dvr,
                 color: Colors.green[500],
               ),
             ),
+            Divider(),
             ListTile(
-              title: Text('jkli@thoughtworks.com'),
+              title:
+                  Text('联系方式', style: TextStyle(fontWeight: FontWeight.w500)),
+              subtitle: Text('jkli@thoughtworks.com'),
               leading: Icon(
                 Icons.email,
                 color: Colors.green[500],
               ),
             ),
+            Divider(),
+            ListTile(
+              title: Text('关于'),
+              leading: Icon(
+                Icons.verified_user,
+                color: Colors.green[500],
+              ),
+              onTap: () {
+                return showDialog<void>(
+                  context: context,
+                  barrierDismissible: false, // user must tap button!
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('李金珂的小屋'),
+                      content: SingleChildScrollView(
+                        child: ListBody(
+                          children: <Widget>[
+                            Text('version: v0.0.1'),
+                          ],
+                        ),
+                      ),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text('知道了'),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
+            )
           ],
         ),
       ),
@@ -106,5 +143,27 @@ class Page extends State<AboutPage> {
           viewportFraction: 0.8,
           scale: 0.9,
         ));
+  }
+
+  void showAboutDialog({
+    @required BuildContext context,
+    String applicationName,
+    String applicationVersion,
+    Widget applicationIcon,
+    String applicationLegalese,
+    List<Widget> children,
+  }) {
+    assert(context != null);
+    showDialog<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return AboutDialog(
+            applicationName: applicationName,
+            applicationVersion: applicationVersion,
+            applicationIcon: applicationIcon,
+            applicationLegalese: applicationLegalese,
+            children: children,
+          );
+        });
   }
 }

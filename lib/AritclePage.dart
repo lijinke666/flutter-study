@@ -40,7 +40,7 @@ class Page extends State<AritclePage> {
             ),
           ),
           body: TabBarView(
-            children: [articleList(context), Text('最热')],
+            children: [hotArticleList(context), hotArticleList(context)],
           ),
         ),
       ),
@@ -59,6 +59,18 @@ class Page extends State<AritclePage> {
             ? PhotosList(photos: snapshot.data)
             : Center(child: CircularProgressIndicator());
       },
+    );
+  }
+
+  Widget hotArticleList(BuildContext context) {
+    return ListView(
+      children: <Widget>[
+        articleCard(context),
+        articleCard(context),
+        articleCard(context),
+        articleCard(context),
+        articleCard(context),
+      ],
     );
   }
 
